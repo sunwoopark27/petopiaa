@@ -11,12 +11,14 @@ public class MyTownBoard {
   private int viewCount;
   private Member writer;
   private Comment comment;
+  private BigAddress bigAddress;
+  private SmallAddress smallAddress;
 
   @Override
   public String toString() {
     return "MyTownBoard [no=" + no + ", title=" + title + ", content=" + content + ", createdDate="
         + createdDate + ", viewCount=" + viewCount + ", writer=" + writer + ", comment=" + comment
-        + "]";
+        + ", bigAddress=" + bigAddress + ", smallAddress=" + smallAddress + "]";
   }
 
   public int getNo() {
@@ -61,5 +63,20 @@ public class MyTownBoard {
   public void setComment(Comment comment) {
     this.comment = comment;
   }
+  public BigAddress getBigAddress() {
+    return bigAddress;
+  }
+  public void setBigAddress(BigAddress bigAddress) {
+    this.bigAddress = bigAddress;
+  }
+  public SmallAddress getSmallAddress() {
+    return smallAddress;
+  }
+  public void setSmallAddress(SmallAddress smallAddress) {
+    this.smallAddress = smallAddress;
+  }
+
+
+
 
 }

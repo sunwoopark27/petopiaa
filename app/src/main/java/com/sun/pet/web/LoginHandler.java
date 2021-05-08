@@ -9,28 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.sun.pet.domain.Member;
-import com.sun.pet.domain.MyTownBoard;
-import com.sun.pet.service.MyTownBoardService;
+import com.sun.pet.service.MemberService;
 
 @SuppressWarnings("serial")
-@WebServlet("/mytown/add")
-public class MytownBoardAddHandler extends HttpServlet{
+@WebServlet("/member/login")
+public class LoginHandler extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    MyTownBoardService boardService = (MyTownBoardService)request.getServletContext().getAttribute("boardService");
-
-    MyTownBoard b = new MyTownBoard();
+    MemberService memberService = (MemberService) request.getServletContext().getAttribute("memberService");
 
     request.setCharacterEncoding("UTF-8");
 
-    b.setTitle(request.getParameter("title"));
-    b.setContent(request.getParameter("content"));
-    HttpServletRequest httpRequest= request;
-    Member loginUser = (Member) httpRequest.getSession().getAttribute("loginUser");
-    b.setWriter(loginUser);
+    String id = request.getParameter("id");
+    String password = request.getParameter("password");
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -38,34 +32,31 @@ public class MytownBoardAddHandler extends HttpServlet{
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
-    out.println("<title>게시글 등록</title>");
-
-    out.println("[게시글 등록]");
 
     try {
-      boardService.add(b);
-
-      out.println("<meta http-equiv='Refresh' content='1;url=list>");
+      Member member = memberService.get(id, password);
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>게시글 등록</h1>");
-      out.println("<p>게시글을 등록했습니다.<p>");
+      if (member == null) {
+        request.getSession().invalidate();
+        throw new ServletException("사용자 정보가 맞지 않습니다.");
+      }
+
+      request.getSession().setAttribute("loginUser", member);
+
+      out.printf("<p>%s 님 로그인하였습니다.</p>\n", member.getId());
+
     } catch (Exception e) {
-      // 상세 오류 내용을 StringWriter로 출력한다.
       StringWriter strWriter = new StringWriter();
       PrintWriter printWriter = new PrintWriter(strWriter);
       e.printStackTrace(printWriter);
-
       out.println("</head>");
       out.println("<body>");
-      out.println("<h1>게시글 등록 오류</h1>");
+      out.println("<h1>로그인 실패</h1>");
       out.printf("<pre>%s</pre>\n", strWriter.toString());
-      out.println("<a href='list'>목록</a></p>\n");
-    }
+    } 
+
     out.println("</body>");
     out.println("</html>");
   }
-
 }
-
-

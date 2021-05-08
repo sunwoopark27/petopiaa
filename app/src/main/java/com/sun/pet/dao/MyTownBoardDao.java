@@ -17,6 +17,15 @@ public interface MyTownBoardDao {
   int updateViewCount(int no) throws Exception;
 
   int delete(int no) throws Exception;
+
+  int comtInsert(MyTownBoard board) throws Exception;
+
+  List<MyTownBoard> listAllComt() throws Exception;
+
+  int comtUpdate(MyTownBoard board) throws Exception;
+
+  int comtDelete(int no) throws Exception;
+
 }
 
 
