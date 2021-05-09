@@ -26,6 +26,8 @@ public class MytownBoardListHandler extends HttpServlet {
     MyTownBoardService boardService = (MyTownBoardService) request.getServletContext().getAttribute("boardService");
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
+    int cityNo = Integer.parseInt(request.getParameter("cityNo"));
+    int stateNo = Integer.parseInt(request.getParameter("stateNo"));
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
@@ -38,7 +40,7 @@ public class MytownBoardListHandler extends HttpServlet {
     out.println("<p><a href='form.html'>새 글</a></p>");
 
     try {
-      List<MyTownBoard> boards = boardService.list();
+      List<MyTownBoard> boards = boardService.list(cityNo,stateNo);
       out.println("<table border='1'>");
       out.println("<thead>");
       out.println("<tr>");

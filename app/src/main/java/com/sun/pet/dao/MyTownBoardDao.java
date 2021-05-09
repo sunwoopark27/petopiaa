@@ -8,6 +8,8 @@ public interface MyTownBoardDao {
 
   int insert(MyTownBoard board) throws Exception;
 
+  List<MyTownBoard> findByArea(int cityNo, int stateNo) throws Exception;
+
   List<MyTownBoard> findByKeyword(String keyword) throws Exception;
 
   MyTownBoard findByNo(int no) throws Exception;
@@ -17,14 +19,6 @@ public interface MyTownBoardDao {
   int updateViewCount(int no) throws Exception;
 
   int delete(int no) throws Exception;
-
-  int comtInsert(MyTownBoard board) throws Exception;
-
-  List<MyTownBoard> listAllComt() throws Exception;
-
-  int comtUpdate(MyTownBoard board) throws Exception;
-
-  int comtDelete(int no) throws Exception;
 
 }
 

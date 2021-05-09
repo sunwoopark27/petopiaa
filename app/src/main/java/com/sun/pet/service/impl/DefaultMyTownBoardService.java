@@ -7,50 +7,50 @@ import com.sun.pet.service.MyTownBoardService;
 
 public class DefaultMyTownBoardService implements MyTownBoardService {
 
-  MyTownBoardDao boardDao; 
+  MyTownBoardDao myTownBoardDao; 
 
-  public DefaultMyTownBoardService(MyTownBoardDao boardDao) {
-    this.boardDao = boardDao;
+  public DefaultMyTownBoardService(MyTownBoardDao myTownBoardDao) {
+    this.myTownBoardDao = myTownBoardDao;
   }
 
   // 게시글 등록 업무
   @Override
   public int add(MyTownBoard board) throws Exception {
-    return boardDao.insert(board);
+    return myTownBoardDao.insert(board);
   }
 
   // 게시글 목록 조회 업무
   @Override
-  public List<MyTownBoard> list() throws Exception {
-    return boardDao.findByKeyword(null);
+  public List<MyTownBoard> list(int cityNo, int stateNo) throws Exception {
+    return myTownBoardDao.findByArea(cityNo,stateNo);
   }
 
   // 게시글 상세 조회 업무
   @Override
   public MyTownBoard get(int no) throws Exception {
-    MyTownBoard board = boardDao.findByNo(no);
-    if (board != null) {
-      boardDao.updateViewCount(no);
+    MyTownBoard myTownBoard = myTownBoardDao.findByNo(no);
+    if (myTownBoard != null) {
+      myTownBoardDao.updateViewCount(no);
     }
-    return board; 
+    return myTownBoard;
   }
 
   // 게시글 변경 업무
   @Override
-  public int update(MyTownBoard board) throws Exception {
-    return boardDao.update(board);
+  public int update(MyTownBoard myTownBoard) throws Exception {
+    return myTownBoardDao.update(myTownBoard);
   }
 
   // 게시글 삭제 업무
   @Override
   public int delete(int no) throws Exception {
-    return boardDao.delete(no);
+    return myTownBoardDao.delete(no);
   }
 
   // 게시글 검색 업무
   @Override
   public List<MyTownBoard> search(String keyword) throws Exception {
-    return boardDao.findByKeyword(keyword);
+    return myTownBoardDao.findByKeyword(keyword);
   }
 }
 
