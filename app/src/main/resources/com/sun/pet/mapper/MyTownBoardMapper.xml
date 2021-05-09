@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eomcs.pms.dao.MyTownBoardDao">
+  
+  <resultMap id="myTownBoardMap" type="board">
+    <id column="tno" property="tno"/>
+    <result column="title" property="title"/>
+    <result column="cont" property="cont"/>
+    <result column="date" property="date"/>
+    <result column="cmtcnt" property="cmtcnt"/>
+    <result column="view" property="view"/>
+    
+    <association property="mno" javaType="member">
+	    <id column="writer_no" property="no"/>
+	    <result column="writer_name" property="name"/>
+    </association>
+    
+  </resultMap>
+  
+  <insert id="insert" parameterType="board">
+    insert into pms_board(title, content, writer) 
+    values(#{title}, #{content}, #{writer.no})
+  </insert>
+
+  <select id="findByKeyword" resultMap="boardMap" parameterType="string">
+    select
+      t.tno,
+      t.title,
+      t.date,
+      b.vw_cnt,
+      m.mno as writer_no,
+      m.name as writer_name
+    from pet_mytown t
+      inner join pet_user m on m.
+      inner join pet_user m on m.mno=b.mno
+    
+    <if test="value != null">
+    where 
+      b.title like concat('%', #{value},'%')
+      or b.content like concat('%', #{value},'%')
+      or m.name like concat('%', #{value},'%')
+    </if>
+    
+    order by b.no desc
+  </select>
+  
+  <select id="findByNo" resultMap="boardMap" parameterType="int">
+    select
+      b.no,
+      b.title,
+      b.content,
+      b.cdt,
+      b.vw_cnt,
+      b.like_cnt,
+      m.no as writer_no,
+      m.name as writer_name
+    from pms_board b
+      inner join pms_member m on m.no=b.writer
+    where b.no = #{value}
+  </select>
+  
+  <update id="update" parameterType="board">
+    update pms_board set
+        title = #{title}, 
+        content = #{content}
+    where no = #{no}
+  </update>
+  
+  <update id="updateViewCount" parameterType="int">
+    update pms_board set 
+      vw_cnt = vw_cnt + 1 
+    where no = #{value}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from pms_board 
+    where no = #{value}
+  </delete>
+
+</mapper>
+
+
+
+
+
+
+

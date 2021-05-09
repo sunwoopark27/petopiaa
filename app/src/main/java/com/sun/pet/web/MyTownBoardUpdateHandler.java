@@ -13,7 +13,7 @@ import com.sun.pet.domain.MyTownBoard;
 import com.sun.pet.service.MyTownBoardService;
 
 @SuppressWarnings("serial")
-@WebServlet("/board/update")
+@WebServlet("/mytown/update")
 public class MyTownBoardUpdateHandler extends HttpServlet {
 
   @Override

@@ -14,7 +14,7 @@ import com.sun.pet.domain.MyTownBoard;
 import com.sun.pet.service.MyTownBoardService;
 
 @SuppressWarnings("serial")
-@WebServlet("/board/detail")
+@WebServlet("/mytown/detail")
 public class MyTownBoardDetailHandler extends HttpServlet {
 
   SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
